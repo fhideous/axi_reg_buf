@@ -38,7 +38,7 @@ module buffer_tb;
             tdata_i     = data_i;
             tready_i    = ready_i;
             #10
-            
+
                 $display("--------------");
         end
 
@@ -59,17 +59,19 @@ module buffer_tb;
         buffer_test(0, 0, 4'b0100);
         buffer_test(1, 0, 4'b0001);
         buffer_test(1, 0, 4'b1000);
-        buffer_test(1, 0, 4'b0010);
+        buffer_test(1, 1, 4'b1000);
+        buffer_test(1, 1, 4'b0010);
         buffer_test(0, 0, 4'b1100);
         buffer_test(1, 1, 4'b1100);
+        buffer_test(1, 0, 4'b1101);
         buffer_test(0, 0, 4'b0101);
         buffer_test(0, 1, 4'b1001);
         buffer_test(0, 1, 4'b1111);
         #100
         buffer_test(1, 1, 4'b0011);
         buffer_test(1, 0, 4'b1001);
-        buffer_test(1, 0, 4'b1011);
-        buffer_test(1, 0, 4'b1011);
+        buffer_test(0, 0, 4'b1011);
+        buffer_test(0, 0, 4'b1011);
         buffer_test(0, 1, 4'b1101);
         buffer_test(1, 1, 4'b0111);
         buffer_test(0, 1, 4'b1111);
