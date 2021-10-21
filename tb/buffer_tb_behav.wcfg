@@ -11,13 +11,13 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="258111fs"></ZoomEndTime>
-      <Cursor1Time time="180000fs"></Cursor1Time>
+      <ZoomStartTime time="599345fs"></ZoomStartTime>
+      <ZoomEndTime time="933277fs"></ZoomEndTime>
+      <Cursor1Time time="729610fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="133"></NameColumnWidth>
-      <ValueColumnWidth column_width="72"></ValueColumnWidth>
+      <ValueColumnWidth column_width="68"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="9" />
    <wvobject fp_name="/buffer_tb/clk_i" type="logic">
@@ -47,7 +47,7 @@
       <wvobject fp_name="/buffer_tb/uut/handshake_left" type="logic">
          <obj_property name="ElementShortName">handshake_left</obj_property>
          <obj_property name="ObjectShortName">handshake_left</obj_property>
-         <obj_property name="CustomSignalColor">#808080</obj_property>
+         <obj_property name="CustomSignalColor">#DCDCDC</obj_property>
          <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
    </wvobject>
