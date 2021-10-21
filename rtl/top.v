@@ -15,8 +15,8 @@ module BUFFER(
 reg   [3:0]             data_reg_0;
 reg   [3:0]             data_reg_1;
 
-reg                     handshake_left;
-reg                     handshake_right;
+wire                    handshake_left;
+wire                    handshake_right;
 
 reg   [1:0]             state;  
 reg   [1:0]             next_state;
@@ -27,40 +27,30 @@ localparam    ONE_BIT_HOLD_S         = 2'b01;
 localparam    TWO_BIT_HOLD_S         = 2'b10;
 
 always @( posedge clk_i ) begin
-    if ( !arstn_i ) begin 
-        tready_o       <= 0;
-        handshake_left <= 0;
-    end else begin
-        if (state == IDLE_S || state == ONE_BIT_HOLD_S ) begin
-            if ( tvalid_i ) begin
-                handshake_left <= 1'b1;
-                if (state == ONE_BIT_HOLD_S)
-                    tready_o <= 1'b0;
-                tvalid_o <= 1'b1;
-            end
-        end
-        else if ( handshake_left )
-            handshake_left <= 1'b0;
+    if ( !arstn_i ) 
+        tready_o       <= 1;
+    else begin
+        if ( state == ONE_BIT_HOLD_S && tvalid_i && !tready_i)
+            tready_o <= 1'b0;
+        else if ( state == TWO_BIT_HOLD_S && tready_i )
+            tready_o <= 1'b1; 
     end
 end
 
 always @( posedge clk_i ) begin
     if ( !arstn_i )
-        handshake_right <= 1'b0;
+        tvalid_o      <= 0;
     else begin 
-        if ( state == ONE_BIT_HOLD_S || state == TWO_BIT_HOLD_S ) begin
-            if ( tready_i ) begin
-                handshake_right <= 1'b1;      
-            end
-            if ( state == ONE_BIT_HOLD_S )
-                tvalid_o <= 1'b0;
-            else
-                tready_o <= 1'b0;
-        end
-        else if ( handshake_right )
-            handshake_right <= 1'b0; 
+        if ( state == ONE_BIT_HOLD_S && !tvalid_i && tready_i )
+            tvalid_o <= 1'b0;
+        else if ( state == IDLE_S && tvalid_i)
+            tvalid_o <= 1'b1;
+
     end
 end
+
+assign    handshake_left  = ( tready_o && tvalid_i ) ; /* || ( tvalid_i && handshake_right ) */ 
+assign    handshake_right = ( tready_i && tvalid_o );
 
 always @( posedge clk_i ) begin
     if ( !arstn_i ) begin
@@ -69,22 +59,22 @@ always @( posedge clk_i ) begin
         data_reg_1  <= 'b0;
     end
     else begin
-        if      (state == IDLE_S         && tvalid_i)
+        if      (state == IDLE_S         && handshake_left)
             data_reg_0  <= tdata_i;
-        else if (state == TWO_BIT_HOLD_S && tvalid_i && tready_i) begin
+        else if (state == TWO_BIT_HOLD_S && handshake_left && handshake_right) begin
             tdata_o     <= data_reg_0;
             data_reg_0  <= data_reg_1;
             data_reg_1  <= tdata_i;
         end
-        else if (state == ONE_BIT_HOLD_S && tvalid_i && tready_i) begin
+        else if (state == ONE_BIT_HOLD_S && handshake_left && handshake_right) begin
             tdata_o     <= data_reg_0;
             data_reg_0  <= tdata_i;
         end
-        else if (state == ONE_BIT_HOLD_S && tvalid_i)
+        else if (state == ONE_BIT_HOLD_S && handshake_left)
             data_reg_1  <= tdata_i;
-        else if (state == ONE_BIT_HOLD_S && tready_i)
+        else if (state == ONE_BIT_HOLD_S && handshake_right)
             tdata_o     <= data_reg_0;
-        else if (state == TWO_BIT_HOLD_S && tready_i) begin
+        else if (state == TWO_BIT_HOLD_S && handshake_right) begin
             tdata_o     <= data_reg_0;
             data_reg_0  <= data_reg_1;
         end
@@ -102,7 +92,7 @@ always @( * ) begin
   case( state )
     IDLE_S:
       begin
-        if( tvalid_i )
+        if( handshake_left )
           next_state = ONE_BIT_HOLD_S;
         else 
           next_state = IDLE_S;
@@ -110,11 +100,11 @@ always @( * ) begin
 
     ONE_BIT_HOLD_S:
       begin
-        if ( tvalid_i && tready_i ) 
+        if ( handshake_left && handshake_right ) 
           next_state  = ONE_BIT_HOLD_S;
-        else if( tready_i ) 
+        else if( handshake_right ) 
             next_state = IDLE_S;
-        else if ( tvalid_i )
+        else if ( handshake_left )
             next_state = TWO_BIT_HOLD_S;
         else
             next_state = TWO_BIT_HOLD_S;
@@ -122,7 +112,7 @@ always @( * ) begin
 
     TWO_BIT_HOLD_S:
       begin
-        if( tready_i )
+        if( handshake_right )
             next_state  = ONE_BIT_HOLD_S;
         else 
             next_state = TWO_BIT_HOLD_S; 
