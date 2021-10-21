@@ -27,9 +27,10 @@ localparam    ONE_BIT_HOLD_S         = 2'b01;
 localparam    TWO_BIT_HOLD_S         = 2'b10;
 
 always @( posedge clk_i ) begin
-    if ( !arstn_i )
+    if ( !arstn_i ) begin 
+        tready_o       <= 0;
         handshake_left <= 0;
-    else begin
+    end else begin
         if (state == IDLE_S || state == ONE_BIT_HOLD_S ) begin
             if ( tvalid_i ) begin
                 handshake_left <= 1'b1;
@@ -68,14 +69,25 @@ always @( posedge clk_i ) begin
         data_reg_1  <= 'b0;
     end
     else begin
-        if      (state == IDLE_S         && next_state == ONE_BIT_HOLD_S)
+        if      (state == IDLE_S         && tvalid_i)
             data_reg_0  <= tdata_i;
-        else if (state == ONE_BIT_HOLD_S && next_state == IDLE_S)
+        else if (state == TWO_BIT_HOLD_S && tvalid_i && tready_i) begin
             tdata_o     <= data_reg_0;
-        else if (state == ONE_BIT_HOLD_S && next_state == TWO_BIT_HOLD_S)
+            data_reg_0  <= data_reg_1;
             data_reg_1  <= tdata_i;
-        else if (state == TWO_BIT_HOLD_S && next_state == ONE_BIT_HOLD_S)
-            tdata_o     <= data_reg_1;
+        end
+        else if (state == ONE_BIT_HOLD_S && tvalid_i && tready_i) begin
+            tdata_o     <= data_reg_0;
+            data_reg_0  <= tdata_i;
+        end
+        else if (state == ONE_BIT_HOLD_S && tvalid_i)
+            data_reg_1  <= tdata_i;
+        else if (state == ONE_BIT_HOLD_S && tready_i)
+            tdata_o     <= data_reg_0;
+        else if (state == TWO_BIT_HOLD_S && tready_i) begin
+            tdata_o     <= data_reg_0;
+            data_reg_0  <= data_reg_1;
+        end
     end    
 end
 
@@ -90,7 +102,7 @@ always @( * ) begin
   case( state )
     IDLE_S:
       begin
-        if( handshake_left )
+        if( tvalid_i )
           next_state = ONE_BIT_HOLD_S;
         else 
           next_state = IDLE_S;
@@ -98,19 +110,19 @@ always @( * ) begin
 
     ONE_BIT_HOLD_S:
       begin
-        if ( handshake_left ) 
-          next_state  = TWO_BIT_HOLD_S;
-        else begin
-          if( handshake_right ) 
+        if ( tvalid_i && tready_i ) 
+          next_state  = ONE_BIT_HOLD_S;
+        else if( tready_i ) 
             next_state = IDLE_S;
-          else 
-            next_state = ONE_BIT_HOLD_S;
+        else if ( tvalid_i )
+            next_state = TWO_BIT_HOLD_S;
+        else
+            next_state = TWO_BIT_HOLD_S;
         end
-      end
 
     TWO_BIT_HOLD_S:
       begin
-        if( handshake_right )
+        if( tready_i )
             next_state  = ONE_BIT_HOLD_S;
         else 
             next_state = TWO_BIT_HOLD_S; 
