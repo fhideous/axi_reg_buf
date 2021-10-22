@@ -64,7 +64,7 @@ module buffer_tb;
         buffer_test(0, 0, 4'b1100);
         buffer_test(1, 1, 4'b1100);
         buffer_test(1, 0, 4'b1101);
-        buffer_test(0, 0, 4'b0101);
+        buffer_test(1, 1, 4'b1101);
         buffer_test(0, 1, 4'b1001);
         buffer_test(0, 1, 4'b1111);
         #100
@@ -78,6 +78,10 @@ module buffer_tb;
         
         #100
         buffer_test(1, 0, 4'b0011);
+        buffer_test(1, 1, 4'b1001);
+        buffer_test(1, 1, 4'b0011);
+        buffer_test(1, 1, 4'b1110);
+        buffer_test(1, 1, 4'b1000);
         buffer_test(1, 1, 4'b1001);
         buffer_test(1, 1, 4'b0011);
         buffer_test(1, 1, 4'b1110);

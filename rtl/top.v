@@ -30,9 +30,11 @@ always @( posedge clk_i ) begin
     if ( !arstn_i ) 
         tready_o       <= 1;
     else begin
-        if ( state == ONE_BIT_HOLD_S && tvalid_i && !tready_i)
+        //if ( state == ONE_BIT_HOLD_S && tvalid_i && !tready_i)
+         if ( next_state == TWO_BIT_HOLD_S )
             tready_o <= 1'b0;
-        else if ( state == TWO_BIT_HOLD_S && tready_i )
+        //else if ( state == TWO_BIT_HOLD_S && tready_i )
+        else if ( state == TWO_BIT_HOLD_S && next_state == ONE_BIT_HOLD_S )
             tready_o <= 1'b1; 
     end
 end
@@ -41,20 +43,25 @@ always @( posedge clk_i ) begin
     if ( !arstn_i )
         tvalid_o      <= 0;
     else begin 
-        if ( state == ONE_BIT_HOLD_S && !tvalid_i && tready_i )
+        //if ( state == ONE_BIT_HOLD_S && !tvalid_i && tready_i )
+        if ( next_state == IDLE_S )
             tvalid_o <= 1'b0;
-        else if ( state == IDLE_S && tvalid_i)
+        //else if ( state == IDLE_S && tvalid_i)
+        else if ( next_state == ONE_BIT_HOLD_S )
             tvalid_o <= 1'b1;
 
     end
 end
 
-assign    handshake_left  = ( tready_o && tvalid_i ) ; /* || ( tvalid_i && handshake_right ) */ 
-assign    handshake_right = ( tready_i && tvalid_o );
+//assign    handshake_left  = ( tready_o && tvalid_i ) ; /* || ( tvalid_i && handshake_right ) */ 
+//assign    handshake_right = ( tready_i && tvalid_o );
+assign    handshake_left  = (  tvalid_i ) ; /* || ( tvalid_i && handshake_right ) */ 
+assign    handshake_right = ( tready_i  );
 
 always @( posedge clk_i ) begin
     if ( !arstn_i ) begin
-        tdata_o     <= 'b0;
+        tdata_o     <= 
+        'b0;
         data_reg_0  <= 'b0;
         data_reg_1  <= 'b0;
     end
@@ -106,14 +113,16 @@ always @( * ) begin
             next_state = IDLE_S;
         else if ( handshake_left )
             next_state = TWO_BIT_HOLD_S;
-        else
-            next_state = TWO_BIT_HOLD_S;
+        else 
+            next_state = ONE_BIT_HOLD_S;
         end
 
     TWO_BIT_HOLD_S:
       begin
-        if( handshake_right )
-            next_state  = ONE_BIT_HOLD_S;
+        if( handshake_right && handshake_left )
+            next_state  = TWO_BIT_HOLD_S;
+        else if ( handshake_right )
+            next_state = ONE_BIT_HOLD_S;
         else 
             next_state = TWO_BIT_HOLD_S; 
       end
