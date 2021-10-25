@@ -3,28 +3,28 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="buffer_tb_behav.wdb" id="1">
+      <db_ref path="tb_ec_aa4_registred_axi_behav.wdb" id="1">
          <top_modules>
-            <top_module name="buffer_tb" />
             <top_module name="glbl" />
+            <top_module name="tb_ec_aa4_registred_axi" />
          </top_modules>
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="653333fs"></ZoomStartTime>
-      <ZoomEndTime time="1069334fs"></ZoomEndTime>
-      <Cursor1Time time="957833fs"></Cursor1Time>
+      <ZoomStartTime time="5447654fs"></ZoomStartTime>
+      <ZoomEndTime time="6160870fs"></ZoomEndTime>
+      <Cursor1Time time="5551240fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="133"></NameColumnWidth>
-      <ValueColumnWidth column_width="64"></ValueColumnWidth>
+      <NameColumnWidth column_width="131"></NameColumnWidth>
+      <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="9" />
-   <wvobject fp_name="/buffer_tb/clk_i" type="logic">
+   <wvobject fp_name="/tb_ec_aa4_registred_axi/DUT/clk_i" type="logic">
       <obj_property name="ElementShortName">clk_i</obj_property>
       <obj_property name="ObjectShortName">clk_i</obj_property>
    </wvobject>
-   <wvobject fp_name="/buffer_tb/arstn_i" type="logic">
+   <wvobject fp_name="/tb_ec_aa4_registred_axi/DUT/arstn_i" type="logic">
       <obj_property name="ElementShortName">arstn_i</obj_property>
       <obj_property name="ObjectShortName">arstn_i</obj_property>
    </wvobject>
@@ -32,83 +32,55 @@
       <obj_property name="label">handshake_left</obj_property>
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="isExpanded"></obj_property>
-      <wvobject fp_name="/buffer_tb/tready_o" type="logic">
-         <obj_property name="ElementShortName">tready_o</obj_property>
-         <obj_property name="ObjectShortName">tready_o</obj_property>
-         <obj_property name="CustomSignalColor">#DCDCDC</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject fp_name="/buffer_tb/tvalid_i" type="logic">
-         <obj_property name="ElementShortName">tvalid_i</obj_property>
-         <obj_property name="ObjectShortName">tvalid_i</obj_property>
-         <obj_property name="CustomSignalColor">#DCDCDC</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject fp_name="/buffer_tb/uut/handshake_left" type="logic">
+      <wvobject fp_name="/tb_ec_aa4_registred_axi/DUT/handshake_left" type="logic">
          <obj_property name="ElementShortName">handshake_left</obj_property>
          <obj_property name="ObjectShortName">handshake_left</obj_property>
-         <obj_property name="CustomSignalColor">#DCDCDC</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ec_aa4_registred_axi/DUT/tvalid_i_reg" type="logic">
+         <obj_property name="ElementShortName">tvalid_i_reg</obj_property>
+         <obj_property name="ObjectShortName">tvalid_i_reg</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_ec_aa4_registred_axi/DUT/tready_o" type="logic">
+         <obj_property name="ElementShortName">tready_o</obj_property>
+         <obj_property name="ObjectShortName">tready_o</obj_property>
       </wvobject>
    </wvobject>
    <wvobject fp_name="group37" type="group">
       <obj_property name="label">handshake_right</obj_property>
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="isExpanded"></obj_property>
-      <wvobject fp_name="/buffer_tb/tready_i" type="logic">
-         <obj_property name="ElementShortName">tready_i</obj_property>
-         <obj_property name="ObjectShortName">tready_i</obj_property>
-         <obj_property name="CustomSignalColor">#808080</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
+      <wvobject fp_name="/tb_ec_aa4_registred_axi/DUT/tready_i_reg" type="logic">
+         <obj_property name="ElementShortName">tready_i_reg</obj_property>
+         <obj_property name="ObjectShortName">tready_i_reg</obj_property>
       </wvobject>
-      <wvobject fp_name="/buffer_tb/tvalid_o" type="logic">
+      <wvobject fp_name="/tb_ec_aa4_registred_axi/DUT/tvalid_o" type="logic">
          <obj_property name="ElementShortName">tvalid_o</obj_property>
          <obj_property name="ObjectShortName">tvalid_o</obj_property>
-         <obj_property name="CustomSignalColor">#808080</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
-      <wvobject fp_name="/buffer_tb/uut/handshake_right" type="logic">
+      <wvobject fp_name="/tb_ec_aa4_registred_axi/DUT/handshake_right" type="logic">
          <obj_property name="ElementShortName">handshake_right</obj_property>
          <obj_property name="ObjectShortName">handshake_right</obj_property>
-         <obj_property name="CustomSignalColor">#808080</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
    </wvobject>
-   <wvobject fp_name="/buffer_tb/tdata_i" type="array">
-      <obj_property name="ElementShortName">tdata_i[3:0]</obj_property>
-      <obj_property name="ObjectShortName">tdata_i[3:0]</obj_property>
-      <obj_property name="CustomSignalColor">#E0FFFF</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
+   <wvobject fp_name="/tb_ec_aa4_registred_axi/DUT/tdata_i" type="array">
+      <obj_property name="ElementShortName">tdata_i[2:0]</obj_property>
+      <obj_property name="ObjectShortName">tdata_i[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ec_aa4_registred_axi/DUT/data_hold" type="array">
+      <obj_property name="ElementShortName">data_hold[2:0]</obj_property>
+      <obj_property name="ObjectShortName">data_hold[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ec_aa4_registred_axi/DUT/tdata_o" type="array">
+      <obj_property name="ElementShortName">tdata_o[2:0]</obj_property>
+      <obj_property name="ObjectShortName">tdata_o[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_ec_aa4_registred_axi/DUT/state" type="array">
+      <obj_property name="ElementShortName">state[2:0]</obj_property>
+      <obj_property name="ObjectShortName">state[2:0]</obj_property>
    </wvobject>
    <wvobject fp_name="group40" type="group">
       <obj_property name="label">store_regs</obj_property>
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="isExpanded"></obj_property>
-      <wvobject fp_name="/buffer_tb/uut/data_reg_0" type="array">
-         <obj_property name="ElementShortName">data_reg_0[3:0]</obj_property>
-         <obj_property name="ObjectShortName">data_reg_0[3:0]</obj_property>
-         <obj_property name="CustomSignalColor">#F0E68C</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-      <wvobject fp_name="/buffer_tb/uut/data_reg_1" type="array">
-         <obj_property name="ElementShortName">data_reg_1[3:0]</obj_property>
-         <obj_property name="ObjectShortName">data_reg_1[3:0]</obj_property>
-         <obj_property name="CustomSignalColor">#F0E68C</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
-      </wvobject>
-   </wvobject>
-   <wvobject fp_name="/buffer_tb/uut/state" type="array">
-      <obj_property name="ElementShortName">state[1:0]</obj_property>
-      <obj_property name="ObjectShortName">state[1:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/buffer_tb/uut/next_state" type="array">
-      <obj_property name="ElementShortName">next_state[1:0]</obj_property>
-      <obj_property name="ObjectShortName">next_state[1:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/buffer_tb/tdata_o" type="array">
-      <obj_property name="ElementShortName">tdata_o[3:0]</obj_property>
-      <obj_property name="ObjectShortName">tdata_o[3:0]</obj_property>
-      <obj_property name="CustomSignalColor">#E0FFFF</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
 </wave_config>
