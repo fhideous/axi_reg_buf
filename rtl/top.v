@@ -19,7 +19,7 @@ reg  [DATA_WIDTH - 1:0]              data_hold;
 wire                                 handshake_left;
 wire                                 handshake_right;
 
-wire [DATA_WIDTH - 1:0]              state;  
+wire [2 - 1:0]                       state; 
 
 assign state = {tready_o , tvalid_o};
 
@@ -30,7 +30,7 @@ localparam    TWO_BIT_HOLD_S         = 2'b01;
 assign        handshake_left  = (state[1] && tvalid_i);
 assign        handshake_right = (state[0] && tready_i);
 
-always @( posedge clk_i ) begin
+always @( posedge clk_i or posedge arstn_i) begin
     if ( !arstn_i ) 
         tready_o      <= 1'b1;
     else begin
@@ -41,7 +41,7 @@ always @( posedge clk_i ) begin
     end
 end
 
-always @( posedge clk_i ) begin
+always @( posedge clk_i or posedge arstn_i) begin
     if ( !arstn_i )
         tvalid_o      <= 1'b0;
     else begin 
@@ -52,7 +52,7 @@ always @( posedge clk_i ) begin
     end
 end
 
-always @( posedge clk_i ) begin
+always @( posedge clk_i or posedge arstn_i) begin
     if ( !arstn_i ) begin
         tdata_o     <= 'b0;
         data_hold   <= 'b0;
