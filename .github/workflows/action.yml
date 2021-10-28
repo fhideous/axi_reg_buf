@@ -13,11 +13,15 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      - name: Git clone 
       - uses: actions/checkout@v2
-      - name: Run a one-line script
-        run: ls -la
-
-      - name: Run a multi-line script
+      - name: Pre_build
         run: |
-          pwd
-          cd ../ && ls -la
+          mv rtl ../../build_test
+          cd ../../build_test
+          ls -la
+          echo "Pre build success"
+
+      - name: Build
+        run: 
+          ./build.sh
