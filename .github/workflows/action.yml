@@ -18,8 +18,8 @@ jobs:
       - name: Pre_build
         run: |
           ls -la 
-          mv rtl/ ../../build_test
-          cd ../../build_test
+          mv rtl/ /home/github_actions/actions-runner
+          cd /home/github_actions/actions-runner
           ls -la
           pwd
           echo "Pre build success"
