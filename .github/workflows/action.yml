@@ -20,15 +20,17 @@ jobs:
           mv rtl/ /home/github_actions/build_test
           cd /home/github_actions/build_test
           ls -la
-          pwd
-          echo "Pre build success"
+          echo "Build success"
 
       - name: Build
         run: 
            cd /home/github_actions/build_test
           ./build.sh
           ls -la
+          echo "Post build success"
       - name: Post_build
-        run:
+        run: |
           cd /home/github_actions/build_test
           rm -rf rtl/
+          ls -la
+          echo "Post build success"
