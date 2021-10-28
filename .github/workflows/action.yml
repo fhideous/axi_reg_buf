@@ -17,9 +17,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Pre_build
         run: |
-          ls -la 
-          mv rtl/ /home/github_actions/actions-runner
-          cd /home/github_actions/actions-runner
+          mv rtl/ /home/github_actions/build_runner
+          cd /home/github_actions/build_runner
           ls -la
           pwd
           echo "Pre build success"
