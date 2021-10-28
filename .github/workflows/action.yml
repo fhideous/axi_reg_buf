@@ -14,7 +14,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/axi_buf_reg_verification@v1
       - name: Run a one-line script
         run: ls -la
 
