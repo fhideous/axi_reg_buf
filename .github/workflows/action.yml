@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Git clone 
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
       - name: Pre_build
         run: |
           mv rtl ../../build_test
