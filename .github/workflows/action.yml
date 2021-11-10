@@ -16,6 +16,7 @@ jobs:
       - name: Git clone 
         uses: actions/checkout@v2
       - run : git log
+      - run : ls -la
       - name: Pre_build
         run: |
           mv rtl/ /home/github_actions/build_test
